@@ -1,5 +1,5 @@
 <?php
-require "api/auth.php"; // ensures user is logged in
+require __DIR__ . "/api/auth.php"; // ensures user is logged in
 ?>
 
 <!DOCTYPE html>
@@ -88,5 +88,6 @@ require "api/auth.php"; // ensures user is logged in
 
 </body>
 </html>
+
 
 
