@@ -1,15 +1,20 @@
 <?php
 
-// ===============================
-// DATABASE CONFIG (Railway / Local)
-// ===============================
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Railway provides these via environment variables
-$host = getenv("MYSQL_HOST") ?: "localhost";
-$db   = getenv("MYSQL_DATABASE") ?: "notebook_app";
-$user = getenv("MYSQL_USER") ?: "root";
-$pass = getenv("MYSQL_PASSWORD") ?: "";
-$port = getenv("MYSQL_PORT") ?: "3306";
+header("Content-Type: application/json");
+
+/* ===============================
+   DATABASE CONFIG (Railway / Local)
+   =============================== */
+
+// Railway environment variables (CORRECT NAMES)
+$host = getenv("MYSQLHOST") ?: "localhost";
+$port = getenv("MYSQLPORT") ?: "3306";
+$db   = getenv("MYSQLDATABASE") ?: "notebook_app";
+$user = getenv("MYSQLUSER") ?: "root";
+$pass = getenv("MYSQLPASSWORD") ?: "";
 
 $charset = "utf8mb4";
 
@@ -26,12 +31,7 @@ try {
     http_response_code(500);
     echo json_encode([
         "error" => "Database connection failed",
-        // uncomment next line ONLY for debugging
-        // "details" => $e->getMessage()
+        "details" => $e->getMessage() // TEMPORARY
     ]);
     exit;
 }
-
-
-
-
