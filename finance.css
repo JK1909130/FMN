@@ -5,103 +5,145 @@
 
 body {
   margin: 0;
+  height: 100vh;
   background: #f3f3f3;
 }
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ... Keep your existing CSS from previous turn or index.css ... */
 
 .topbar {
   height: 60px;
   background: linear-gradient(90deg, #7b6cff, #5fd3f3);
-  color: white;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
-}
-
-.topbar button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.content {
-  padding: 20px;
-}
-
-/* add expense bar */
-.add-expense {
-  display: grid;
-  grid-template-columns: 1fr 120px 150px 150px 50px;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.add-expense input,
-.add-expense select {
-  padding: 8px;
-}
-
-.add-expense button {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* expense list */
-#expenseList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.expense {
-  background: white;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  padding: 0 20px;
+  color: white;
 }
 
-.expense small {
-  color: #666;
+.back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
 }
 
-/* summary */
-.summary {
-  background: white;
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+.total-card {
+    background: #ffd84d; /* Your Finance Yellow */
+    padding: 20px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
 }
 
-#total {
+.total-card p { margin: 0; font-size: 14px; opacity: 0.8; }
+.total-card h2 { margin: 5px 0 0 0; font-size: 28px; }
+
+#toggleTotalBtn:hover {
+    opacity: 1 !important;
+    transform: rotate(45deg);
+    transition: 0.2s;
+}
+
+.add-spending-box {
+    background: white;
+    padding: 12px;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+#financeForm { display: flex; gap: 8px; }
+#financeForm input { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+}
+#desc { flex: 2; }
+#amount { width: 80px; }
+
+.add-btn {
+    background: #7b6cff;
+    color: white;
+    border: none;
+    width: 40px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.spendings-list { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+.spending-item {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    border-left: 5px solid #ffd84d;
+}
+
+.spending-item button:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+    color: #cc0000 !important;
+}
+
+.spending-info .item-desc {
+  display: block;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-/* category bars */
-.bar {
-  margin-bottom: 6px;
+.spending-info .item-date {
+  font-size: 11px;
+  color: #999;
 }
 
-.bar-label {
-  font-size: 12px;
+.spending-amount {
+  font-weight: bold;
+  color: #333;
 }
 
-.bar-track {
-  background: #ddd;
-  height: 8px;
-  border-radius: 6px;
-  overflow: hidden;
+/* ... Previous CSS content ... */
+
+.chart-card {
+  background: white;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  height: 250px; /* Increased from 220px to accommodate 4 bars */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bar-fill {
-  height: 100%;
-  background: #7b6cff;
-  width: 0;
+canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+.view-btn {
+    padding: 6px 15px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    background: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.view-btn.active {
+    background: #7b6cff;
+    color: white;
+    border-color: #7b6cff;
+}
+
+.view-btn:hover:not(.active) {
+    background: #f8f8f8;
 }
