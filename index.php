@@ -1,5 +1,5 @@
 <?php
-require "auth.php"; // ensures user is logged in
+require "api/auth.php"; // ensures user is logged in
 ?>
 
 <!DOCTYPE html>
@@ -88,4 +88,5 @@ require "auth.php"; // ensures user is logged in
 
 </body>
 </html>
+
 
