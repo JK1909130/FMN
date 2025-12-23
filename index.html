@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Forget-Me-Note</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+<div id="bgOverlay"></div>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+  <div class="title-area">
+    <h1>Forget-Me-Note</h1>
+    <div id="nowPlaying" class="now-playing">Nothing playing</div>
+  </div>
+  <div class="user-area">
+    <input type="file"
+       id="bgUpload"
+       accept="image/*"
+       hidden>
+
+<button onclick="document.getElementById('bgUpload').click()">
+  🖼 Change Background
+</button>
+    <button id="blurToggle" title="Toggle blur">🌫</button>
+    <input
+      type="range"
+      id="dimSlider"
+      min="0"
+      max="80"
+      value="60"
+      title="Background dim"
+    />
+    <span id="username"></span>
+    <button data-hover-sound="logout.mp3"id="logout" title="Logout">⏻</button>
+  </div>
+</header>
+
+  <!-- MAIN CONTENT -->
+<main class="dashboard">
+  <div class="action-row">
+    <div
+      class="main-card tasks"
+      data-click-sound="click.mp3"
+      data-hover-sound="hover.mp3"
+      onclick="location.href='tasks.php'">
+      Tasks
+    </div>
+  </div>
+
+  <div class="action-row">
+    <div
+      class="main-card finance"
+      data-click-sound="click.mp3"
+      data-hover-sound="hover.mp3"
+      onclick="location.href='finance.php'">
+      Spendings
+    </div>
+  </div>
+</main>
+
+
+  <!-- SINGLE BOTTOM BAR -->
+  <nav class="bottom-bar">
+    <button class="bottom-btn" id="prevBtn" title="Previous">⏮</button>
+    <button class="bottom-btn" id="playBtn" title="Play">▶</button>
+    <button class="bottom-btn" id="skipBtn" title="Skip">⏭</button>
+    <button class="bottom-btn" id="pauseBtn" title="Pause">⏸</button>
+    <button class="bottom-btn" onclick="location.href='music.php'" title="Music Library">Playlist</button>
+  </nav>
+<!-- Hidden YouTube player -->
+<div id="player"></div>
+</div>
+
+
+
+
+<!-- Scripts -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="index.js"></script>
+
+</body>
+</html>

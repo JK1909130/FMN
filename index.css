@@ -1,0 +1,229 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+
+/* ===============================
+   APP LAYOUT
+   =============================== */
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===============================
+   TOP BAR
+   =============================== */
+.topbar {
+  height: 60px;
+  background: linear-gradient(90deg, #7b6cff, #5fd3f3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: white;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* ===============================
+   USER AREA
+   =============================== */
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#username {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#logout {
+  position: relative;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.logout-text {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#logout:hover .logout-text {
+  opacity: 1;
+}
+
+/* ===============================
+   DASHBOARD
+   =============================== */
+.dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.action-row {
+  display: flex;
+  justify-content: center;
+}
+
+.main-card {
+  width: 280px;
+  height: 90px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.main-card:hover {
+  transform: translateY(-4px);
+}
+
+.tasks {
+  background: #ff4b5c;
+  color: white;
+}
+
+.finance {
+  background: #ffd84d;
+  color: #333;
+}
+
+/* ===============================
+   BOTTOM BAR
+   =============================== */
+.bottom-bar {
+  height: 60px;
+  background: linear-gradient(90deg, #7b6cff, #5fd3f3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ===============================
+   MUSIC MODAL
+   =============================== */
+#musicModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#musicModal.hidden {
+  display: none;
+}
+
+.music-box {
+  background: #222;
+  padding: 20px;
+  border-radius: 12px;
+  width: 360px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.music-box input {
+  padding: 8px;
+}
+
+.music-box button {
+  padding: 8px;
+  cursor: pointer;
+}
+
+#playlist {
+  list-style: none;
+  padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+#playlist li {
+  padding: 6px 0;
+  border-bottom: 1px solid #444;
+}
+.title-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.now-playing {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+
+  /* background image */
+  background-color: #f3f3f3; /* fallback only */
+  background-image: none;    /* JS will set this */
+  background-size: cover;    /* fills horizontally */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* background overlay for blur + dim */
+#bgOverlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  backdrop-filter: none;
+  background: rgba(0, 0, 0, 0);
+}
+#bgOverlay {
+  transition: backdrop-filter 0.3s ease, background 0.3s ease;
+}
+
+
