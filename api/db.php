@@ -12,7 +12,7 @@ header("Content-Type: application/json");
 // Railway environment variables (CORRECT NAMES)
 $host = getenv("MYSQLHOST") ?: "localhost";
 $port = getenv("MYSQLPORT") ?: "3306";
-$db   = getenv("MYSQLDATABASE") ?: "notebook_app";
+$db   = getenv("MYSQL_DATABASE") ?: "notebook_app";
 $user = getenv("MYSQLUSER") ?: "root";
 $pass = getenv("MYSQLPASSWORD") ?: "";
 
@@ -35,3 +35,4 @@ try {
     ]);
     exit;
 }
+
