@@ -1,3 +1,7 @@
+<?php
+require "auth.php"; // ensures user is logged in
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,3 +88,4 @@
 
 </body>
 </html>
+
