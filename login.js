@@ -29,11 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // success
-      location.href = "index.html";
+      location.href = "index.php";
 
     } catch (err) {
       errorEl.textContent = "Server unreachable";
     }
   });
 });
+
 
