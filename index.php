@@ -3,7 +3,7 @@ $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 // normalize
 if ($path === "/") {
-  require __DIR__ . "/home.php"; // or dashboard page
+  require __DIR__ . "/index.html"; // or dashboard page
   exit;
 }
 
