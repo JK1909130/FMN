@@ -2,10 +2,11 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-header("Content-Type: application/json");
-
 
 header("Content-Type: application/json");
+
+require __DIR__ . "/db.php";   // 🔑 THIS WAS MISSING
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
@@ -38,9 +39,6 @@ if (!$user || !password_verify($password, $user["password_hash"])) {
     exit;
 }
 
-session_start();
 $_SESSION["user_id"] = $user["id"];
 
 echo json_encode(["success" => true]);
-
-
