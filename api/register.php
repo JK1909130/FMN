@@ -1,8 +1,9 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+require "db.php";
+header("Content-Type: application/json");
 
-require "../db.php";
+// 🚨 TEMP DEBUG
+// echo json_encode(["method" => $_SERVER["REQUEST_METHOD"]]); exit;
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
@@ -12,15 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$username = trim($data["username"] ?? "");
-$email    = trim($data["email"] ?? "");
-$password = $data["password"] ?? "";
-
-if (!$username || !$email || !$password) {
+if (!$data) {
     http_response_code(400);
-    echo json_encode(["error" => "Missing fields"]);
+    echo json_encode(["error" => "Invalid JSON"]);
     exit;
 }
+
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -32,3 +30,4 @@ $stmt = $pdo->prepare("
 $stmt->execute([$username, $email, $hash]);
 
 echo json_encode(["success" => true]);
+
