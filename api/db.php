@@ -1,8 +1,16 @@
 <?php
-$host = "localhost";
-$db   = "notebook_app";
-$user = "root";        // change if needed
-$pass = "";            // change if needed
+
+// ===============================
+// DATABASE CONFIG (Railway / Local)
+// ===============================
+
+// Railway provides these via environment variables
+$host = getenv("MYSQL_HOST") ?: "localhost";
+$db   = getenv("MYSQL_DATABASE") ?: "notebook_app";
+$user = getenv("MYSQL_USER") ?: "root";
+$pass = getenv("MYSQL_PASSWORD") ?: "";
+$port = getenv("MYSQL_PORT") ?: "3306";
+
 $charset = "utf8mb4";
 
 $options = [
@@ -12,14 +20,14 @@ $options = [
 ];
 
 try {
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$db;charset=$charset",
-        $user,
-        $pass,
-        $options
-    );
-} catch (Exception $e) {
+    $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(["error" => "Database connection failed"]);
+    echo json_encode([
+        "error" => "Database connection failed",
+        // uncomment next line ONLY for debugging
+        // "details" => $e->getMessage()
+    ]);
     exit;
 }
