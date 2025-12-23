@@ -2,13 +2,11 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-header("Content-Type: application/json");
-
 
 header("Content-Type: application/json");
 
-// 🚨 TEMP DEBUG
-// echo json_encode(["method" => $_SERVER["REQUEST_METHOD"]]); exit;
+require __DIR__ . "/db.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
@@ -18,13 +16,47 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!$data) {
+$username = trim($data["username"] ?? "");
+$email    = trim($data["email"] ?? "");
+$password = $data["password"] ?? "";
+$confirm  = $data["confirm"] ?? "";
+
+if ($username === "" || $email === "" || $password === "" || $confirm === "") {
     http_response_code(400);
-    echo json_encode(["error" => "Invalid JSON"]);
+    echo json_encode(["error" => "Missing fields"]);
     exit;
 }
 
+if ($password !== $confirm) {
+    http_response_code(400);
+    echo json_encode(["error" => "Passwords do not match"]);
+    exit;
+}
 
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid email"]);
+    exit;
+}
+
+/* ===============================
+   CHECK DUPLICATES
+   =============================== */
+$stmt = $pdo->prepare("
+    SELECT id FROM users 
+    WHERE username = ? OR email = ?
+");
+$stmt->execute([$username, $email]);
+
+if ($stmt->fetch()) {
+    http_response_code(409);
+    echo json_encode(["error" => "Username or email already exists"]);
+    exit;
+}
+
+/* ===============================
+   CREATE USER
+   =============================== */
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
 $stmt = $pdo->prepare("
@@ -34,7 +66,6 @@ $stmt = $pdo->prepare("
 
 $stmt->execute([$username, $email, $hash]);
 
+$_SESSION["user_id"] = $pdo->lastInsertId();
+
 echo json_encode(["success" => true]);
-
-
-
