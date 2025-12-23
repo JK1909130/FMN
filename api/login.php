@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 header("Content-Type: application/json");
 
-require "db.php";
+
 header("Content-Type: application/json");
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -42,4 +42,5 @@ session_start();
 $_SESSION["user_id"] = $user["id"];
 
 echo json_encode(["success" => true]);
+
 
