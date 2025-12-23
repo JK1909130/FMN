@@ -1,37 +1,39 @@
 <?php
-require "db.php";
+require "../db.php";
+
+header("Content-Type: application/json");
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+    echo json_encode(["error" => "Method not allowed"]);
+    exit;
+}
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data["username"], $data["email"], $data["password"])) {
+if (
+    empty($data["username"]) ||
+    empty($data["email"]) ||
+    empty($data["password"])
+) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Missing fields"]);
+    echo json_encode(["error" => "Missing fields"]);
     exit;
 }
 
 $username = trim($data["username"]);
 $email = trim($data["email"]);
-$password = $data["password"];
+$password = password_hash($data["password"], PASSWORD_DEFAULT);
 
-if (strlen($password) < 6) {
-    echo json_encode(["success" => false, "message" => "Password must be at least 6 characters"]);
-    exit;
+try {
+    $stmt = $pdo->prepare("
+        INSERT INTO users (username, email, password_hash)
+        VALUES (?, ?, ?)
+    ");
+    $stmt->execute([$username, $email, $password]);
+
+    echo json_encode(["success" => true]);
+} catch (PDOException $e) {
+    http_response_code(409);
+    echo json_encode(["error" => "User already exists"]);
 }
-
-$check = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
-$check->execute([$username, $email]);
-
-if ($check->fetch()) {
-    echo json_encode(["success" => false, "message" => "Username or email already exists"]);
-    exit;
-}
-
-$hash = password_hash($password, PASSWORD_DEFAULT);
-
-$stmt = $pdo->prepare("
-    INSERT INTO users (username, email, password_hash)
-    VALUES (?, ?, ?)
-");
-$stmt->execute([$username, $email, $hash]);
-
-echo json_encode(["success" => true]);
