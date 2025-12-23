@@ -1,20 +1,13 @@
 <?php
-require "../db.php";
-
+require "db.php";
 header("Content-Type: application/json");
-
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405);
-    echo json_encode(["error" => "Method not allowed"]);
-    exit;
-}
 
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (
-    empty($data["username"]) ||
-    empty($data["email"]) ||
-    empty($data["password"])
+    !isset($data["username"]) ||
+    !isset($data["email"]) ||
+    !isset($data["password"])
 ) {
     http_response_code(400);
     echo json_encode(["error" => "Missing fields"]);
@@ -23,14 +16,22 @@ if (
 
 $username = trim($data["username"]);
 $email = trim($data["email"]);
-$password = password_hash($data["password"], PASSWORD_DEFAULT);
+$password = $data["password"];
+
+if ($username === "" || $email === "" || $password === "") {
+    http_response_code(400);
+    echo json_encode(["error" => "Empty fields"]);
+    exit;
+}
+
+$hash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
     $stmt = $pdo->prepare("
         INSERT INTO users (username, email, password_hash)
         VALUES (?, ?, ?)
     ");
-    $stmt->execute([$username, $email, $password]);
+    $stmt->execute([$username, $email, $hash]);
 
     echo json_encode(["success" => true]);
 } catch (PDOException $e) {
