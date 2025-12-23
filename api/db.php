@@ -6,7 +6,7 @@
 
 // Railway provides these via environment variables
 $host = getenv("MYSQLHOST") ?: "localhost";
-$db   = getenv("MYSQLDATABASE") ?: "notebook_app";
+$db   = getenv("MYSQL_DATABASE") ?: "notebook_app";
 $user = getenv("MYSQLUSER") ?: "root";
 $pass = getenv("MYSQLPASSWORD") ?: "";
 $port = getenv("MYSQLPORT") ?: "3306";
@@ -31,5 +31,6 @@ try {
     ]);
     exit;
 }
+
 
 
